@@ -4,4 +4,4 @@ from .models import Plan
 # Register your models here.
 @admin.register(Plan)
 class PlanModelAdmin(admin.ModelAdmin):
-    list_display = ['id','items', ]
+    list_display = ['id','items' ]
