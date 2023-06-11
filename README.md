@@ -304,6 +304,28 @@ new Vue({
   render: h => h(App),
 }).$mount('#app')
 ``` 
- 
+ ### Permission:
+ 1. app level: insettings .py
+ REST_FRAMEWORK = {
+     'DEFAULT_PERMISSION_CLASSES': [
+         'rest_framework.permissions.IsAuthenticated',IsAuthenticatedOrReadOnly, ... 
+     ]
+}
+2.In object level:
+class ReviewList(generics.ListCreateAPIView):
+    serializer_class = ReviewSerializer
+    #object level permission-in class/api view:https://www.django-rest-framework.org/api-guide/permissions/#object-level-permissions
+    permission_classes = [IsAuthenticatedOrReadOnly] / [IsAuthenticated] / [IsAuthenticated|ReadOnly]
+ /[IsAdmin]
+    #.IsAuthenticatedOrReadOnly-used loggedIn but can only read
+    #.IsAuthenticated-Only read and write if authenticated
+    #.IsAuthenticated|ReadOnly - 
+    ....
+    
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchList=pk)
+     
+
 
 
